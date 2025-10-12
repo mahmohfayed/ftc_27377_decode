@@ -86,7 +86,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @TeleOp(name="Omni Drive To AprilTag", group = "Concept")
-@Disabled
+//@Disabled
 public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
 {
     // Adjust these numbers to suit your robot.
@@ -103,13 +103,13 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
     final double MAX_AUTO_STRAFE= 0.5;   //  Clip the strafing speed to this max value (adjust for your robot)
     final double MAX_AUTO_TURN  = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
 
-    private DcMotor frontLeftDrive = null;  //  Used to control the left front drive wheel
-    private DcMotor frontRightDrive = null;  //  Used to control the right front drive wheel
-    private DcMotor backLeftDrive = null;  //  Used to control the left back drive wheel
-    private DcMotor backRightDrive = null;  //  Used to control the right back drive wheel
+    private DcMotor frontLeftDrive ;  //  Used to control the left front drive wheel
+    private DcMotor frontRightDrive;  //  Used to control the right front drive wheel
+    private DcMotor backLeftDrive;  //  Used to control the left back drive wheel
+    private DcMotor backRightDrive ;  //  Used to control the right back drive wheel
 
     private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
-    private static final int DESIRED_TAG_ID = -1;     // Choose the tag you want to approach or set to -1 for ANY tag.
+    private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
     private VisionPortal visionPortal;               // Used to manage the video source.
     private AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
     private AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
@@ -127,10 +127,10 @@ public class RobotAutoDriveToAprilTagOmni extends LinearOpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must match the names assigned during the robot configuration.
         // step (using the FTC Robot Controller app on the phone).
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightMotor");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftMotor");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightMotor");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
