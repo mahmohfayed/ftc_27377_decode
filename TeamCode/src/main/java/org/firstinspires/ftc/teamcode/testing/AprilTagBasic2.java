@@ -21,11 +21,11 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AprilTagBasic2 {
 
 
-    @Autonomous(name = "AprilTagBasic1", group = "TestBasic")
-    public class AprilTagBasic1 extends OpMode {
+
+    @Autonomous(name = "AprilTagBasic2", group = "TestBasic")
+    public class AprilTagBasic2 extends OpMode {
         private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
         private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
         private VisionPortal visionPortal;               // Used to manage the video source.
@@ -214,4 +214,3 @@ public class AprilTagBasic2 {
         }
     }
 
-}
