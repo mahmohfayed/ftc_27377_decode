@@ -9,10 +9,11 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "Basic", group = "Examples")
+@Autonomous(name = "Basic", group = "TestBasic")
 public class Basic extends OpMode {
 
     private Follower follower;
+
     private Timer pathTimer, opmodeTimer;
     private int pathState;
 
