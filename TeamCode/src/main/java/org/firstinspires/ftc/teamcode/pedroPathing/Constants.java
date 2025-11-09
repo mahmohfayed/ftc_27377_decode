@@ -15,10 +15,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
-    public static FollowerConstants followerConstants = new FollowerConstants();
-//            .mass(9)
-//            .forwardZeroPowerAcceleration(-25.9346931313679598)
-//            .lateralZeroPowerAcceleration(-67.342491844080064)
+    public static FollowerConstants followerConstants = new FollowerConstants()
+            .mass(7.711)
+            .forwardZeroPowerAcceleration(-55.226586278411865)
+            .lateralZeroPowerAcceleration(-21.481394836106393);
 //            .translationalPIDFCoefficients(new PIDFCoefficients(
 //                    0.03,
 //                    0,
@@ -70,18 +70,17 @@ public class Constants {
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
-//            .xVelocity(78.261926752421046666666666666667)
-//            .yVelocity(61.494551922189565);
-
+            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+            .xVelocity(64.1312569974164)
+            .yVelocity(57.7105765755721);
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-8)
-            .strafePodX(-6.5)
+            .forwardPodY(7.15)
+            .strafePodX(2.64)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
-            .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD)
+            .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
             .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
 
     /**
      These are the PathConstraints in order:
