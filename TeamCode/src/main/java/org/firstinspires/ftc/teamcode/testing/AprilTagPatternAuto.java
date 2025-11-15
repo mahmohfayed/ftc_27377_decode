@@ -70,6 +70,8 @@ public class AprilTagPatternAuto extends LinearOpMode {
         }
     }
     public void intakeArtifacts(){
+        //robot.intakeArifact();
+        // intake.artifactIntake();
 
     }
     public void shootArtifacts() {
