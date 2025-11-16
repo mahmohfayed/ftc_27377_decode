@@ -10,8 +10,9 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public final class Robot {
 
     public final Follower drivetrain;
-    public final Loader loader;     // renamed intake
+    //public final Loader loader;     // loader
     public final Shooter shooter;
+    public final Intake intake;
 
     public final BulkReader bulkReader;
     public Robot(HardwareMap hardwareMap) {
@@ -20,8 +21,11 @@ public final class Robot {
 
         drivetrain = Constants.createFollower(hardwareMap);
 
-        loader = new Loader();
-        loader.init(hardwareMap);
+//        loader = new Loader();
+//        loader.init(hardwareMap);
+
+        intake = new Intake();
+        intake.init(hardwareMap);
 
         shooter = new Shooter();
         shooter.init(hardwareMap);

@@ -42,7 +42,7 @@ public class BasicRobot {
 
     }
     public void intakeArtifacts(){
-        intake.intakeArtifacts();
+        intake.intake();
     }
     public void shootArtifacts(){
         shooter.shootArtifacts();
