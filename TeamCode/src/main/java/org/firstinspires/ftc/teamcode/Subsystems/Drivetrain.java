@@ -57,10 +57,10 @@ public class Drivetrain {
          backLeftPower /= maxSpeed;
          backRightPower /= maxSpeed;
 
-        frontLeft.setPower(frontLeftPower);
-        frontRight.setPower(frontRightPower);
-        backLeft.setPower(backLeftPower);
-        backRight.setPower(backRightPower);
+        Drivetrain.setSafePower(frontLeft, frontLeftPower);
+        Drivetrain.setSafePower(frontRight,frontRightPower);
+        Drivetrain.setSafePower(backLeft, backLeftPower);
+        Drivetrain.setSafePower(backRight, backRightPower);
     }
 
     // Thanks to FTC16072 for sharing this code!!
@@ -92,6 +92,13 @@ public class Drivetrain {
 
         Drivetrain.setPowers(frontLeftPower, frontRightPower, backLeftPower, backRightPower);
     }
+    static public void setSafePower(DcMotorEx motor, double targetPower){
+        final double SLEW_RATE = 0.2;
+        double currentPower = motor.getPower();
+        double desiredChange = targetPower - currentPower;
+        double limitedChange = Math.max(-SLEW_RATE, Math.min(desiredChange, SLEW_RATE));
+        motor.setPower(currentPower += limitedChange);
+    }
 
 
 
@@ -100,4 +107,8 @@ public class Drivetrain {
 
         telemetry.update();
     }
+//    }
+//    public void drive(double x, double y, double rx){
+//        driveFieldRelative(x,y,rx);
+//    }
 }

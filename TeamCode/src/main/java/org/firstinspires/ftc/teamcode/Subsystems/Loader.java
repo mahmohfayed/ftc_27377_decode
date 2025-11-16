@@ -18,4 +18,11 @@ public class Loader {
         loaderMotor.setPower(power);
     }
     public void stop(){loaderMotor.setPower(0);}
+    public void loadArtifacts(){
+        loaderMotor.setPower(1);
+    }
+    public void unloadArtifacts(){
+        loaderMotor.setPower(-1);
+    }
+
 }
