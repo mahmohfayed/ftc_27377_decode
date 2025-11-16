@@ -27,7 +27,7 @@ public class AprilTagBasic1 extends OpMode {
    // private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
     private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
     public C70 camera = new C70();
-    private AprilTagDetection desiredTag;
+    //private AprilTagDetection desiredTag;
     private VisionPortal visionPortal;
     private Follower follower;
     private Timer pathTimer, opmodeTimer;
@@ -132,13 +132,13 @@ public class AprilTagBasic1 extends OpMode {
     public void loop() {
         // ---- AprilTag Detection Logic ----
         targetFound = false;
-        desiredTag  = null;
+        double desiredTag  = 23;
 
         camera.getDetections(targetFound, desiredTag, DESIRED_TAG_ID);
         // ---- End Detection Logic ----
 
-        telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-        telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
+//        telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
+//        telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
 
         // Run the state machine
         autonomousPathUpdate();

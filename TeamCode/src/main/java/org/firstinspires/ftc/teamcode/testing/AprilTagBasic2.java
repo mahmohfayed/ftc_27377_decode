@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
-    @Autonomous(name = "AprilTagBasic2", group = "TestBasic")
+    @Autonomous(name = "AprilTagBasic2")
     public class AprilTagBasic2 extends OpMode {
         private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
         private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
@@ -39,8 +39,8 @@ import java.util.concurrent.TimeUnit;
         private boolean targetFound = false;
 
         // --------- Step 2: Define poses ---------
-        private final Pose startPose = new Pose(56.0, 8.0, Math.toRadians(90));   // robot start
-        private final Pose endPose   = new Pose(56.0, 36.0, Math.toRadians(90));  // end point
+        private final Pose GPPstartPose = new Pose(56.0, 8.0, Math.toRadians(90));   // robot start
+        private final Pose GPPendPose   = new Pose(56.0, 36.0, Math.toRadians(90));  // end point
 
         // --------- Step 3: Define paths ---------
         private Path simplePath;       // single BezierLine
@@ -48,13 +48,13 @@ import java.util.concurrent.TimeUnit;
 
         public void buildPaths() {
             // Straight line from start → end
-            simplePath = new Path(new BezierLine(startPose, endPose));
-            simplePath.setLinearHeadingInterpolation(startPose.getHeading(), endPose.getHeading());
+            simplePath = new Path(new BezierLine(GPPstartPose, GPPendPose));
+            simplePath.setLinearHeadingInterpolation(GPPstartPose.getHeading(), GPPendPose.getHeading());
 
             // Example PathChain version (optional)
             simpleChain = follower.pathBuilder()
-                    .addPath(new BezierLine(startPose, endPose))
-                    .setLinearHeadingInterpolation(startPose.getHeading(), endPose.getHeading())
+                    .addPath(new BezierLine(GPPstartPose, GPPendPose))
+                    .setLinearHeadingInterpolation(GPPstartPose.getHeading(), GPPendPose.getHeading())
                     .build();
         }
 
@@ -106,7 +106,7 @@ import java.util.concurrent.TimeUnit;
                         .build();
             } else {
                 visionPortal = new VisionPortal.Builder()
-                        .setCamera(BuiltinCameraDirection.BACK)
+                        .setCamera(BuiltinCameraDirection.FRONT)
                         .addProcessor(aprilTag)
                         .build();
             }
@@ -146,7 +146,7 @@ import java.util.concurrent.TimeUnit;
             initAprilTag(); // initialize the AprilTag processor
 
             follower = Constants.createFollower(hardwareMap);
-            follower.setStartingPose(startPose);
+            follower.setStartingPose(GPPstartPose);
             buildPaths();
 
             telemetry.addData("Status", "Initialized. Waiting for camera and start.");

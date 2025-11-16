@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Subsystems.BasicRobot;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -21,7 +22,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
 @Autonomous(name = "April Tag with PP test", group = "Opmode")
-@Configurable
+//@Configurable
 @SuppressWarnings("FieldCanBeLocal")
 public class AprilTagPatternAuto extends LinearOpMode {
     // ... (Pose and PathChain definitions are unchanged)
@@ -42,6 +43,9 @@ public class AprilTagPatternAuto extends LinearOpMode {
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTag;
     private AprilTagDetection desiredTag = null;
+
+    public BasicRobot robot = new BasicRobot();
+
 
 
     // Other variables
@@ -70,11 +74,13 @@ public class AprilTagPatternAuto extends LinearOpMode {
         }
     }
     public void intakeArtifacts(){
-        //robot.intakeArifact();
+        robot.intakeArtifacts();
         // intake.artifactIntake();
 
     }
     public void shootArtifacts() {
+        robot.shootArtifacts();
+
 
     }
 
@@ -91,9 +97,12 @@ public class AprilTagPatternAuto extends LinearOpMode {
         }
 
         log("Status", "Initialized. Waiting for AprilTag detection...");
+        robot.init(hardwareMap);
 
         // --- BUG FIX 2: Detect the AprilTag during the init phase ---
         while (opModeInInit()) {
+            robot.init(hardwareMap);
+
             List<AprilTagDetection> currentDetections = aprilTag.getDetections();
             for (AprilTagDetection detection : currentDetections) {
                 if (detection.metadata != null) {
@@ -140,6 +149,7 @@ public class AprilTagPatternAuto extends LinearOpMode {
 
         runtime.reset();
         while (opModeIsActive()) {
+
             follower.update();
             panelsTelemetry.update();
             currentPose = follower.getPose();

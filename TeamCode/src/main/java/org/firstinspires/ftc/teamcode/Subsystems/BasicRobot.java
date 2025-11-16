@@ -51,7 +51,7 @@ public class BasicRobot {
         loader.loadArtifacts();
     }
     public void unloadArtifacts(){
-        loader.unloadArtifacts();
+        intake.unloadArtifacts();
     }
     public void stop(){
         drivetrain.stop();
