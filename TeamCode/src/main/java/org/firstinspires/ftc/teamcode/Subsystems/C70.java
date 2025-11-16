@@ -43,13 +43,13 @@ public class C70 {
         if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
             exposureControl.setMode(ExposureControl.Mode.Manual);
         }
-        exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+        exposureControl.setExposure((long) exposureMS, TimeUnit.MILLISECONDS);
 
         GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
         gainControl.setGain(gain);
     }
 
-    public void getDetections( boolean targetFound, AprilTagDetection desiredTag, int DESIRED_TAG_ID){
+    public void getDetections(boolean targetFound, AprilTagDetection desiredTag, int DESIRED_TAG_ID) {
 
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
@@ -65,4 +65,12 @@ public class C70 {
         }
     }
 
+    public void stop() {
+        // Close the vision portal to free up resources
+        if (visionPortal != null) {
+            visionPortal.close();
+        }
+    }
 }
+
+

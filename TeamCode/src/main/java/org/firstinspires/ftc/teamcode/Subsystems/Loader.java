@@ -1,23 +1,28 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-// single motor intake for picking up game elements
+//single motor that loads balls
 public class Loader {
 
-    private DcMotor intakeMotor;
+    private DcMotor loaderMotor;
 
-    public void init(HardwareMap hardwareMap) {
-        intakeMotor = hardwareMap.get(DcMotor.class, "wheelMotor");
-        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+    public void init (HardwareMap hardwareMap){
+        loaderMotor = hardwareMap.get(DcMotor.class,"loaderMotor");
+        loaderMotor.setDirection(DcMotor.Direction.FORWARD);
     }
 
-    public void setIntake(double power) {
-        intakeMotor.setPower(power);
+    public void setLoaderMotor (double power) {
+        loaderMotor.setPower(power);
+    }
+    public void stop(){loaderMotor.setPower(0);}
+    public void loadArtifacts(){
+        loaderMotor.setPower(1);
+    }
+    public void unloadArtifacts(){
+        loaderMotor.setPower(-1);
     }
 
-    public void stop() {
-        intakeMotor.setPower(0);
-    }
 }

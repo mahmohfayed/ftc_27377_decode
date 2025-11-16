@@ -71,4 +71,10 @@ public class Shooter {
 //
 //        }
     }
+    public void shootArtifacts() {
+        shooter.setPower(1);
+    }
+    public void stop() {
+        shooter.setPower(0);
+    }
 }
