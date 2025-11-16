@@ -13,10 +13,11 @@ public class Intake {
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
     }
-    public void intake(double power) {
+    public void intakeArtifacts(double power) {
         intakeMotor.setPower(power);
     }
-    public void intakeArtifacts() {
+//
+  public void intake() {
         intakeMotor.setPower(1);
     }
     public void unloadArtifacts() {
