@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDir
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.Subsystems.C70;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -23,11 +24,11 @@ import java.util.concurrent.TimeUnit;
 
 @Autonomous(name = "AprilTagBasic1", group = "TestBasic")
 public class AprilTagBasic1 extends OpMode {
-    private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
+   // private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
     private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
-    private VisionPortal visionPortal;               // Used to manage the video source.
-    private AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
+    public C70 camera = new C70();
     private AprilTagDetection desiredTag;
+    private VisionPortal visionPortal;
     private Follower follower;
     private Timer pathTimer, opmodeTimer;
     private int pathState;
@@ -89,48 +90,11 @@ public class AprilTagBasic1 extends OpMode {
         pathTimer.resetTimer();
     }
 
-    private void initAprilTag() {
-        // Create the AprilTag processor by using a builder.
-        aprilTag = new AprilTagProcessor.Builder().build();
 
-        aprilTag.setDecimation(2);
-
-        // Create the vision portal by using a builder.
-        if (USE_WEBCAM) {
-            visionPortal = new VisionPortal.Builder()
-                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                    .addProcessor(aprilTag)
-                    .build();
-        } else {
-            visionPortal = new VisionPortal.Builder()
-                    .setCamera(BuiltinCameraDirection.BACK)
-                    .addProcessor(aprilTag)
-                    .build();
-        }
-    }
 
     // NOTE: The `sleep()` and `stop()` methods are not available in an OpMode.
     // I have removed them from this method. The check for camera streaming should
     // be done in a loop in init_loop().
-    private void setManualExposure(int exposureMS, int gain) {
-        if (visionPortal == null) {
-            return;
-        }
-
-        // Wait for the camera to be open
-        while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
-            // This loop will run in init() and wait for the camera.
-        }
-
-        ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
-        if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
-            exposureControl.setMode(ExposureControl.Mode.Manual);
-        }
-        exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
-
-        GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
-        gainControl.setGain(gain);
-    }
 
 
     // --------- Step 5: OpMode lifecycle ---------
@@ -140,7 +104,8 @@ public class AprilTagBasic1 extends OpMode {
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
-        initAprilTag(); // initialize the AprilTag processor
+        //initAprilTag(); // initialize the AprilTag processor
+        camera.init(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
@@ -156,7 +121,7 @@ public class AprilTagBasic1 extends OpMode {
         if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
             telemetry.addData("Camera", "Ready");
             // Set exposure once the camera is streaming.
-            setManualExposure(6, 250);
+            camera.setManualExposure(6, 250);
         } else {
             telemetry.addData("Camera", "Waiting...");
         }
@@ -169,19 +134,11 @@ public class AprilTagBasic1 extends OpMode {
         targetFound = false;
         desiredTag  = null;
 
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
-                if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
-                    targetFound = true;
-                    desiredTag = detection;
-                    telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-                    telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
-                    break; // Found the tag, so exit the loop
-                }
-            }
-        }
+        camera.getDetections(targetFound, desiredTag, DESIRED_TAG_ID);
         // ---- End Detection Logic ----
+
+        telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
+        telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
 
         // Run the state machine
         autonomousPathUpdate();
