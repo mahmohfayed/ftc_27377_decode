@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 //(name = "Shooter PID")
-public class shooter {
+public class Shooter {
 
     DcMotorEx shooter;
 
