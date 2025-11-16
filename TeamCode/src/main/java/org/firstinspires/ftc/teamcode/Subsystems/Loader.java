@@ -18,4 +18,7 @@ public class Loader {
         loaderMotor.setPower(power);
     }
     public void stop(){loaderMotor.setPower(0);}
+
+    public void setLoaderMotor() {
+    }
 }
