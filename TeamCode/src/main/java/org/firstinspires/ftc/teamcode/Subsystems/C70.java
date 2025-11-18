@@ -51,7 +51,7 @@ public class C70 {
 
     public void getDetections(boolean targetFound, double desiredTag, int DESIRED_TAG_ID) {
 
-        April
+
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {

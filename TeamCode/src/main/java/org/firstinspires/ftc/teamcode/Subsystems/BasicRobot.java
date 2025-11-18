@@ -42,10 +42,11 @@ public class BasicRobot {
 
     }
     public void intakeArtifacts(){
-        intake.intake();
+        intake.intakeArtifacts();
     }
     public void shootArtifacts(){
         shooter.shootArtifacts();
+        loader.loadArtifacts();
     }
     public void loadArtifacts(){
         loader.loadArtifacts();
