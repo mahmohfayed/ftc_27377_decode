@@ -19,7 +19,7 @@ public class MainTeleOp extends LinearOpMode {
     public void runOpMode() {
         gp1 = new GamepadEx(gamepad1);
         robot = new Robot(hardwareMap);
-        robot.drivetrain.setPose(new Pose());
+        robot.drivetrain.setPose(new Pose(0,0,0));
 
         waitForStart();
 

@@ -19,7 +19,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @TeleOp
     public class ExampleAprilTagUsage extends OpMode {
-        private Limelight3A camera; //any camera here
+       private Limelight3A camera; //any camera here
         private Follower follower;
         private boolean following = false;
 

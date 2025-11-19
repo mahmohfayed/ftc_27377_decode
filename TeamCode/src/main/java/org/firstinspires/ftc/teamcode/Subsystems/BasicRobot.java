@@ -19,7 +19,7 @@ public class BasicRobot {
 
     //public final BulkReader bulkReader;
 
-    public BasicRobot() {
+    public BasicRobot( ) {
         //drivetrain = new MecanumDrive(hardwareMap, startPose);
         loader = new Loader();
         intake = new Intake();

@@ -1,33 +1,49 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+
+// In progress dont change
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.BasicRobot;
 
-public class TestTeleOpWSubsystems extends LinearOpMode {
+public class TeleOpWPS5 extends LinearOpMode {
 
     private BasicRobot robot = new BasicRobot();
+    private GamepadEx gp1;
 
     @Override
     public void runOpMode() {
+        gp1 = new GamepadEx(gamepad1);
         robot.init(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = gamepad1.left_stick_y * 0.5;
-            double x = -gamepad1.left_stick_x;
-            double rx = -gamepad1.right_stick_x * 0.5;
+            gp1.readButtons();
 
-            double rightTrigger = gamepad1.right_trigger;
-            double leftTrigger = gamepad1.left_trigger;
+
+            double triggerPower =
+                    gp1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)
+                            - gp1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
+
+            robot.shooter.setShooter();
+            //robot.loader.setLoaderMotor(triggerPower);
+
+            if (gp1.isDown(GamepadKeys.Button.X)) { // down controller
+                robot.intake.intakeArtifacts();
+            } else if (gp1.isDown(GamepadKeys.Button.B)) {
+                robot.intake.intakeArtifacts();
+            } else {
+                robot.intake.stop();
+            }
 
 
             robot.drive();// set the robot so it drives
 
-            robot.intakeArtifacts();
 
 
             if (gamepad1.y) {// if y is pressed shoot artifacts w loader

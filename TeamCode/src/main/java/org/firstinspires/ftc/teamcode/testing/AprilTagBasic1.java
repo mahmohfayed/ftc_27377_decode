@@ -24,10 +24,11 @@ import java.util.concurrent.TimeUnit;
 
 @Autonomous(name = "AprilTagBasic1", group = "TestBasic")
 public class AprilTagBasic1 extends OpMode {
-   // private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
+   private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
     private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
-    public C70 camera = new C70();
-    //private AprilTagDetection desiredTag;
+    //public C70 camera = new C70();
+    private AprilTagProcessor aprilTag;
+    private AprilTagDetection desiredTag;
     private VisionPortal visionPortal;
     private Follower follower;
     private Timer pathTimer, opmodeTimer;
@@ -90,6 +91,44 @@ public class AprilTagBasic1 extends OpMode {
         pathTimer.resetTimer();
     }
 
+    private void initAprilTag() {
+        // Create the AprilTag processor by using a builder.
+        aprilTag = new AprilTagProcessor.Builder().build();
+
+        aprilTag.setDecimation(2);
+
+        // Create the vision portal by using a builder.
+        if (USE_WEBCAM) {
+            visionPortal = new VisionPortal.Builder()
+                    .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                    .addProcessor(aprilTag)
+                    .build();
+        } else {
+            visionPortal = new VisionPortal.Builder()
+                    .setCamera(BuiltinCameraDirection.FRONT)
+                    .addProcessor(aprilTag)
+                    .build();
+        }
+    }
+    private void setManualExposure(int exposureMS, int gain) {
+        if (visionPortal == null) {
+            return;
+        }
+
+        // Wait for the camera to be open
+        while (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
+            // This loop will run in init() and wait for the camera.
+        }
+
+        ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
+        if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
+            exposureControl.setMode(ExposureControl.Mode.Manual);
+        }
+        exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+
+        GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
+        gainControl.setGain(gain);
+    }
 
 
     // NOTE: The `sleep()` and `stop()` methods are not available in an OpMode.
@@ -104,8 +143,8 @@ public class AprilTagBasic1 extends OpMode {
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
-        //initAprilTag(); // initialize the AprilTag processor
-        camera.init(hardwareMap);
+        initAprilTag(); // initialize the AprilTag processor
+        //camera.init(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
@@ -121,20 +160,32 @@ public class AprilTagBasic1 extends OpMode {
         if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
             telemetry.addData("Camera", "Ready");
             // Set exposure once the camera is streaming.
-            camera.setManualExposure(6, 250);
+            setManualExposure(6, 250);
         } else {
             telemetry.addData("Camera", "Waiting...");
         }
         telemetry.update();
     }
-
     @Override
     public void loop() {
         // ---- AprilTag Detection Logic ----
-        targetFound = false;
-        double desiredTag  = 23;
 
-        camera.getDetections(targetFound, desiredTag, DESIRED_TAG_ID);
+
+        targetFound = false;
+        desiredTag  = null;
+
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
+                    targetFound = true;
+                    desiredTag = detection;
+                    telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
+                    telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
+                    break; // Found the tag, so exit the loop
+                }
+            }
+        }
         // ---- End Detection Logic ----
 
 //        telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
