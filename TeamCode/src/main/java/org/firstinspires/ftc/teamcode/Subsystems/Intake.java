@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 // The intake is a single motor
 public class Intake {
+    double power;
     private DcMotor intakeMotor;
 
 
@@ -13,8 +14,8 @@ public class Intake {
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
 
     }
-    public void intakeArtifacts() {
-        intakeMotor.setPower(0.90);
+    public void intakeArtifacts(double power) {
+        intakeMotor.setPower(this.power);
     }
 //
 

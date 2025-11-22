@@ -36,10 +36,10 @@ public class Shooter {
 
 
     public void init(HardwareMap hardwareMap) {
-        shooter = new MotorEx(hardwareMap, "shooter", Motor.GoBILDA.BARE);
+        shooter = new MotorEx(hardwareMap, "leftShooterMotor", Motor.GoBILDA.BARE);
         //shooter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        followerShooter = new MotorEx(hardwareMap, "shooter", Motor.GoBILDA.BARE);
+        followerShooter = new MotorEx(hardwareMap, "rightShooterMotor", Motor.GoBILDA.BARE);
        // followerShooter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
 

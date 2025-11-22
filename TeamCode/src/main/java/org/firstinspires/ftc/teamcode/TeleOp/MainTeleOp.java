@@ -43,9 +43,9 @@ public class MainTeleOp extends LinearOpMode {
             //robot.loader.setLoaderMotor(triggerPower);
 
             if (gp1.isDown(GamepadKeys.Button.X)) {
-                robot.intake.intakeArtifacts();
+                robot.intake.intakeArtifacts(0.90);
             } else if (gp1.isDown(GamepadKeys.Button.B)) {
-                robot.intake.intakeArtifacts();
+                robot.intake.intakeArtifacts(-.50);
             } else {
                 robot.intake.stop();
             }

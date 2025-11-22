@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 
 // In progress dont change
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -34,9 +33,9 @@ public class TeleOpWPS5 extends LinearOpMode {
             //robot.loader.setLoaderMotor(triggerPower);
 
             if (gp1.isDown(GamepadKeys.Button.X)) { // down controller
-                robot.intake.intakeArtifacts();
+                robot.intake.intakeArtifacts(1);
             } else if (gp1.isDown(GamepadKeys.Button.B)) {
-                robot.intake.intakeArtifacts();
+                robot.intake.intakeArtifacts(-1);
             } else {
                 robot.intake.stop();
             }
