@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDir
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.Subsystems.C70;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -23,11 +24,12 @@ import java.util.concurrent.TimeUnit;
 
 @Autonomous(name = "AprilTagBasic1", group = "TestBasic")
 public class AprilTagBasic1 extends OpMode {
-    private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
+   private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
     private static final int DESIRED_TAG_ID = 21;     // Choose the tag you want to approach or set to -1 for ANY tag.
-    private VisionPortal visionPortal;               // Used to manage the video source.
-    private AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
+    //public C70 camera = new C70();
+    private AprilTagProcessor aprilTag;
     private AprilTagDetection desiredTag;
+    private VisionPortal visionPortal;
     private Follower follower;
     private Timer pathTimer, opmodeTimer;
     private int pathState;
@@ -103,15 +105,11 @@ public class AprilTagBasic1 extends OpMode {
                     .build();
         } else {
             visionPortal = new VisionPortal.Builder()
-                    .setCamera(BuiltinCameraDirection.BACK)
+                    .setCamera(BuiltinCameraDirection.FRONT)
                     .addProcessor(aprilTag)
                     .build();
         }
     }
-
-    // NOTE: The `sleep()` and `stop()` methods are not available in an OpMode.
-    // I have removed them from this method. The check for camera streaming should
-    // be done in a loop in init_loop().
     private void setManualExposure(int exposureMS, int gain) {
         if (visionPortal == null) {
             return;
@@ -133,6 +131,11 @@ public class AprilTagBasic1 extends OpMode {
     }
 
 
+    // NOTE: The `sleep()` and `stop()` methods are not available in an OpMode.
+    // I have removed them from this method. The check for camera streaming should
+    // be done in a loop in init_loop().
+
+
     // --------- Step 5: OpMode lifecycle ---------
     @Override
     public void init() {
@@ -141,6 +144,7 @@ public class AprilTagBasic1 extends OpMode {
         opmodeTimer.resetTimer();
 
         initAprilTag(); // initialize the AprilTag processor
+        //camera.init(hardwareMap);
 
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(startPose);
@@ -162,10 +166,11 @@ public class AprilTagBasic1 extends OpMode {
         }
         telemetry.update();
     }
-
     @Override
     public void loop() {
         // ---- AprilTag Detection Logic ----
+
+
         targetFound = false;
         desiredTag  = null;
 
@@ -182,6 +187,9 @@ public class AprilTagBasic1 extends OpMode {
             }
         }
         // ---- End Detection Logic ----
+
+//        telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
+//        telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
 
         // Run the state machine
         autonomousPathUpdate();
