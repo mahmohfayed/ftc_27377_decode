@@ -9,7 +9,7 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "Basic", group = "TestBasic")
+@Autonomous(name = "Basic", group = "TestAuto")// moves to a defensive positon infront blue goal
 public class Basic extends OpMode {
 
     private Follower follower;
@@ -19,7 +19,7 @@ public class Basic extends OpMode {
 
     // --------- Step 2: Define poses ---------
     private final Pose startPose = new Pose(56.0, 8.0, Math.toRadians(90));   // robot start
-    private final Pose endPose   = new Pose(56.0, 36.0, Math.toRadians(90));  // end point
+    private final Pose endPose   = new Pose(56.0, 97, Math.toRadians(90));  // end point
 
     // --------- Step 3: Define paths ---------
     private Path simplePath;       // single BezierLine

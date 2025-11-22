@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Robot;
-
+// geometery. Pose.getHeading() was on null object refrence
 @TeleOp(name = "Main TeleOp", group = "Main")
 public class MainTeleOp extends LinearOpMode {
 
@@ -22,6 +22,7 @@ public class MainTeleOp extends LinearOpMode {
         robot.drivetrain.setPose(new Pose(0,0,0));
 
         waitForStart();
+
 
         while (opModeIsActive()) {
 
