@@ -8,9 +8,11 @@ import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+@Disabled
 
-@Autonomous(name = "Basic2", group = "Examples")
+@Autonomous(name = "Basic2", group = "TestAuto") // moves the balls up to the goal
 public class Basic2 extends OpMode {
 
     private Follower follower;
