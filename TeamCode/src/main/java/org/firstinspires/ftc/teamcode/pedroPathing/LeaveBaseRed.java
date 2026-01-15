@@ -1,54 +1,47 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-@Autonomous(name = "Basic", group = "TestBasic")
-public class Basic extends OpMode {
+@Autonomous(name = "LeaveBaseRed")
+public class LeaveBaseRed extends OpMode {
 
     private Follower follower;
-
     private Timer pathTimer, opmodeTimer;
     private int pathState;
 
     // --------- Step 2: Define poses ---------
-    private final Pose startPose = new Pose(56.0, 8.0, Math.toRadians(90));   // robot start
-    private final Pose endPose   = new Pose(56.0, 36.0, Math.toRadians(90));  // end point
+    private final Pose startPose = new Pose(72, 8, Math.toRadians(90));
 
     // --------- Step 3: Define paths ---------
-    private Path simplePath;       // single BezierLine
-    private PathChain simpleChain; // if you want a chain
+    private PathChain simpleChain;
 
     public void buildPaths() {
-        // Straight line from start → end
-        simplePath = new Path(new BezierLine(startPose, endPose));
-        simplePath.setLinearHeadingInterpolation(startPose.getHeading(), endPose.getHeading());
 
-        // Example PathChain version (optional)
         simpleChain = follower.pathBuilder()
-                .addPath(new BezierLine(startPose, endPose))
-                .setLinearHeadingInterpolation(startPose.getHeading(), endPose.getHeading())
+                .addPath(new BezierLine(new Pose(56.000, 8.000), new Pose(28.000, 8.000)))
+                .setConstantHeadingInterpolation(Math.toRadians(90))
                 .build();
     }
 
-    // --------- Step 4: FSM (path state machine) ---------
+    // --------- Step 4: FSM ---------
     public void autonomousPathUpdate() {
         switch (pathState) {
             case 0:
-                // Follow our simple straight line
-                follower.followPath(simplePath);
+                follower.followPath(simpleChain);
                 setPathState(1);
                 break;
 
             case 1:
                 if (!follower.isBusy()) {
-                    // Finished path → stop
                     setPathState(-1);
                 }
                 break;
@@ -68,13 +61,9 @@ public class Basic extends OpMode {
         opmodeTimer.resetTimer();
 
         follower = Constants.createFollower(hardwareMap);
-        // If you don’t have Constants, directly construct your Follower:
-        // follower = new Follower(hardwareMap);
-
         follower.setStartingPose(startPose);
 
         buildPaths();
-
     }
 
     @Override

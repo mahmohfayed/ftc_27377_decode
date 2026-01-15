@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.testing;
+package org.firstinspires.ftc.teamcode.decode.testing;
 
 
 import com.pedropathing.follower.Follower;
@@ -19,7 +19,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 @TeleOp
     public class ExampleAprilTagUsage extends OpMode {
-        private Limelight3A camera; //any camera here
+       private Limelight3A camera; //any camera here
         private Follower follower;
         private boolean following = false;
 
@@ -36,7 +36,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
         public void init() {
 
             initAprilTag();
-            //camera = hardwareMap.get(Limelight3A.class, "limelight");
+            camera = hardwareMap.get(Limelight3A.class, "limelight");
             follower = Constants.createFollower(hardwareMap);
             follower.setStartingPose(new Pose()); //set your starting pose
         }
