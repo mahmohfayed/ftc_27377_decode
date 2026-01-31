@@ -42,10 +42,10 @@ public class MecanumTeleOp extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
-            setSafePower(frontLeftMotor, frontLeftPower);
-            setSafePower(backLeftMotor, backLeftPower);
-            setSafePower(frontRightMotor,frontRightPower);
-            setSafePower(backRightMotor,backRightPower);
+            frontLeftMotor.setPower(frontLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backLeftMotor.setPower(backLeftPower);
+            backRightMotor.setPower(backRightPower);
 
             telemetry.addData("Front Left Power", frontLeftPower);
             telemetry.addData("Front Right Power", frontRightPower);
