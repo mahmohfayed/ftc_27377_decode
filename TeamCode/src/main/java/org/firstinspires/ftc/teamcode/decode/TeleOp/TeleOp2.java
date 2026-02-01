@@ -127,10 +127,10 @@ public class TeleOp2 extends LinearOpMode {
                 servo.setHoodservo(0.45);// close
             }
             else if(gamepad1.b){ // far
-                servo.setHoodservo(0.5);
+                servo.setHoodservo(0.2);
             }
             else if(gamepad1.dpad_down){ // all the way to the top
-                servo.setHoodservo(0.4);
+                servo.setHoodservo(0.3);
             }
 
 
