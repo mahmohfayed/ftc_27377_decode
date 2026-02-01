@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.decode.Subsystems;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -9,29 +11,24 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class HoodServo {
 
-    private Servo hoodLeft;
-    private Servo hoodRight;
-
-
-    // private CRServo CRservo;
+    private Servo leftServo;
+    private Servo rightServo;
 
     public void init(HardwareMap hardwareMap) {
+        //CRservo = hardwareMap.get(CRServo.class,"hoodServo");
+        leftServo = hardwareMap.get(Servo.class, "leftServo");
+        rightServo = hardwareMap.get(Servo.class, "rightServo");
 
-        // -------- Standard Servos --------
-        hoodLeft  = hardwareMap.get(Servo.class, "hoodServoLeft");
-        hoodRight = hardwareMap.get(Servo.class, "hoodServoRight");
+        rightServo.setDirection(Servo.Direction.REVERSE);
 
-        // Reverse one servo if mounted opposite
-        hoodRight.setDirection(Servo.Direction.REVERSE);
-
-
-        // CRservo = hardwareMap.get(CRServo.class, "hoodServo");
     }
 
-    public void setHoodservo(double angle) {
-        hoodLeft.setPosition(angle);
-        hoodRight.setPosition(angle);
-    }
+
+
+        public void setHoodservo (double angle){
+            leftServo.setPosition(angle);
+            rightServo.setPosition(angle);
+        }
 
 
     /*
@@ -55,8 +52,9 @@ public class HoodServo {
     */
 
 
-    public double getPosition(){
+        public double getPosition () {
 
-        return hoodLeft.getPosition();
+            return leftServo.getPosition();
+        }
     }
-}
+

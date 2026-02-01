@@ -139,7 +139,7 @@ public class TeleOp2 extends LinearOpMode {
             telemetry.addData("Back Left Power", backLeft.getPower());
             telemetry.addData("Back Right Power", backRight.getPower());
             telemetry.addData("intake Power", intake.getPower());
-            telemetry.addData("servo Power", servo.getPosition());
+            //telemetry.addData("servo Power", servo.get());
             telemetry.update();
         }
 
