@@ -2,7 +2,14 @@ package org.firstinspires.ftc.teamcode.decode.Subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
+import com.pedropathing.geometry.Pose;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.PathBuilder;
+import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -10,10 +17,14 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class Drivetrain {
+    private Follower follower;
     private static DcMotorEx frontLeft;
     private static DcMotorEx frontRight;
     private static DcMotorEx backLeft;
     private static DcMotorEx backRight;
+
+    public static final Pose RED_GOAL_POSE = new Pose(137.5, 143.2, 0);
+    public static final Pose BLUE_GOAL_POSE = RED_GOAL_POSE.mirror();
 
     private IMU imu;
 
@@ -111,4 +122,28 @@ public class Drivetrain {
 //    public void drive(double x, double y, double rx){
 //        driveFieldRelative(x,y,rx);
 //    }
+    public Pose getPose(){
+        return follower.getPose();
+    }
+
+    public double getDistanceFromGoal(boolean red){
+        Pose goalPose = RED_GOAL_POSE;
+        Pose robotPose = getPose();
+
+        return Math.sqrt(
+                Math.pow(goalPose.getY() - robotPose.getY(), 2) + Math.pow(goalPose.getX() - robotPose.getX(), 2));
+    }
+
+
+    public double getAngleFromGoalDegrees(boolean red){
+        Pose goalPose = RED_GOAL_POSE;
+        Pose robotPose = getPose();
+
+        return Math.toDegrees(Math.atan2(goalPose.getY() - robotPose.getY(),goalPose.getX() - robotPose.getX()));
+    }
+
+    public void setStartingPose(Pose pose){
+        follower.setStartingPose(pose);
+    }
+
 }

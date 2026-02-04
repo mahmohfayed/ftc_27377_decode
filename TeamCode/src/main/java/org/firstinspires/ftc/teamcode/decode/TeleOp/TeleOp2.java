@@ -21,8 +21,7 @@ public class TeleOp2 extends LinearOpMode {
     public HoodServo servo = new HoodServo();
     @Override
     public void runOpMode() throws InterruptedException {
-        servo.init(hardwareMap);
-        //servo = hardwareMap.servo.get("hoodServo");
+        //Servo servo = hardwareMap.servo.get("rightServo");
         DcMotor frontLeft = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeft = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRight = hardwareMap.dcMotor.get("frontRightMotor");
@@ -31,6 +30,8 @@ public class TeleOp2 extends LinearOpMode {
         DcMotor followerWheelMotor = hardwareMap.dcMotor.get("leftShooterMotor");
         DcMotor intake = hardwareMap.dcMotor.get("intakeMotor");
         DcMotor loader = hardwareMap.dcMotor.get("loaderMotor");
+
+        servo.init(hardwareMap);
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -47,7 +48,7 @@ public class TeleOp2 extends LinearOpMode {
 
         double flyPower = 0;
 
-        servo.setHoodservo(0.45);
+        //servo.setPosition(0.45);
 
         waitForStart();
 
@@ -124,14 +125,15 @@ public class TeleOp2 extends LinearOpMode {
             }
 
             if(gamepad1.x){
-                servo.setHoodservo(0.45);// close
-            }
-            else if(gamepad1.b){ // far
+                //servo.setPosition(0.5);
                 servo.setHoodservo(0.2);
             }
-            else if(gamepad1.dpad_down){ // all the way to the top
-                servo.setHoodservo(0.3);
+            else if(gamepad1.b){
+//                servo.setPosition(0.45);// close
+                servo.setHoodservo(0.7);
+
             }
+
 
 
             telemetry.addData("Front Left Power", frontLeft.getPower());
@@ -139,7 +141,7 @@ public class TeleOp2 extends LinearOpMode {
             telemetry.addData("Back Left Power", backLeft.getPower());
             telemetry.addData("Back Right Power", backRight.getPower());
             telemetry.addData("intake Power", intake.getPower());
-            //telemetry.addData("servo Power", servo.get());
+            telemetry.addData("servo Power", servo.getPosition());
             telemetry.update();
         }
 

@@ -17,17 +17,18 @@ public class HoodServo {
     public void init(HardwareMap hardwareMap) {
         //CRservo = hardwareMap.get(CRServo.class,"hoodServo");
         leftServo = hardwareMap.get(Servo.class, "leftServo");
-        rightServo = hardwareMap.get(Servo.class, "rightServo");
+       // rightServo = hardwareMap.get(Servo.class, "rightServo");
 
-        rightServo.setDirection(Servo.Direction.REVERSE);
+        //  rightServo.setDirection(Servo.Direction.REVERSE);
 
     }
 
 
 
         public void setHoodservo (double angle){
+            //rightServo.setPosition(angle);
+            //
             leftServo.setPosition(angle);
-            rightServo.setPosition(angle);
         }
 
 

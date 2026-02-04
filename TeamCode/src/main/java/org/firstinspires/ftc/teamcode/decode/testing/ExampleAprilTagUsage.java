@@ -30,7 +30,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
         private AprilTagDetection desiredTag;
         private boolean targetFound = false;
 
-        private final Pose TARGET_LOCATION = new Pose(56.0, 36.0, Math.toRadians(90)); //Put the target location here
+        private final Pose TARGET_LOCATION = new Pose(56.0, 36.0, Math.toRadians(16)); //Put the target location here
 
         @Override
         public void init() {
