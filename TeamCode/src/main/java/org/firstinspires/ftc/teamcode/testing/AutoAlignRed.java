@@ -39,6 +39,8 @@ public abstract class AutoAlignRed extends LinearOpMode {
                 }
                 drivetrain.setStartingPose(LAST_REMEMBERED_POSE);
             }
+            LAST_REMEMBERED_POSE = drivetrain.getPose();
+
         }
     }
 

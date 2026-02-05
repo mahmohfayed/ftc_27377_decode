@@ -6,12 +6,14 @@ import com.pedropathing.ftc.FTCCoordinates;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.PedroCoordinates;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.decode.Subsystems.Limelight;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -20,17 +22,18 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 @TeleOp
     public class ExampleAprilTagUsage extends OpMode {
        private Limelight3A camera; //any camera here
+        //Limelight camera = new Limelight(hardwareMap);
         private Follower follower;
         private boolean following = false;
 
-        private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
+        private static final boolean USE_WEBCAM = false;  // Set true to use a webcam, or false for a phone camera
 
         private AprilTagProcessor aprilTag;
         private VisionPortal visionPortal;
         private AprilTagDetection desiredTag;
         private boolean targetFound = false;
 
-        private final Pose TARGET_LOCATION = new Pose(56.0, 36.0, Math.toRadians(16)); //Put the target location here
+        private final Pose TARGET_LOCATION = new Pose(56.0, 36.0, Math.toRadians(38)); //Put the target location here
 
         @Override
         public void init() {
@@ -68,14 +71,37 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
             if (following && !follower.isBusy()) following = false;
         }
 
-        private Pose getRobotPoseFromCamera() {
-            //Fill this out to get the robot Pose from the camera's output (apply any filters if you need to using follower.getPose() for fusion)
-            //Pedro Pathing has built-in KalmanFilter and LowPassFilter classes you can use for this
+    private Pose getRobotPoseFromCamera() {
+        // 1. Get the latest result from the Limelight
+         LLResult result = camera.getLatestResult();
 
-            //Use this to convert standard FTC coordinates to standard Pedro Pathing coordinates
-            return new Pose(0, 0, 0, FTCCoordinates.INSTANCE).getAsCoordinateSystem(PedroCoordinates.INSTANCE);
-        }
-
+//        // 2. Check if the result is valid and contains data
+//        if (result != null && result.isValid()) {
+//            // Use Botpose (Field Relative).
+//            // Array contents: [x, y, z, roll, pitch, yaw] in Meters and Degrees.
+//            double poseArray = result.getBotpose();
+//
+//            if (poseArray != null) {
+//                // 3. Convert Limelight Meters to Inches (Meters * 39.37)
+//                double xInches = poseArray[0] * 39.37;
+//                double yInches = poseArray[1] * 39.37;
+//
+//                // Limelight provides Yaw in degrees; convert to Radians for the Pose object
+//                double yawRadians = Math.toRadians(result.getTx());
+//
+//                // 4. Create a Pose in the standard FTC Coordinate System
+//                // (Center of field is 0,0, X is forward, Y is left)
+//                Pose rawCameraPose = new Pose(xInches, yInches, yawRadians, FTCCoordinates.INSTANCE);
+//
+//                // 5. Convert to Pedro Pathing coordinates and return
+//                return rawCameraPose.getAsCoordinateSystem(PedroCoordinates.INSTANCE);
+//            }
+//        }
+//babby calm down
+        // 6. Fallback: If the camera loses the target, return the current follower pose
+        // This prevents the robot's localization from "jumping" to (0,0,0) suddenly.
+        return follower.getPose();
+    }
 
     private void initAprilTag() {
         // Create the AprilTag processor by using a builder.
