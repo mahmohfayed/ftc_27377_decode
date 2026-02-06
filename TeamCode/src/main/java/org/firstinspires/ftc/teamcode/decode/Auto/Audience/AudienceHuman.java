@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.decode.Subsystems.Common.robot;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -66,7 +67,8 @@ public class AudienceHuman extends AbstractAuto {
                                 RobotActions.intakeAction(1,2),
                                 RobotActions.loaderAction(1,2)
                         ),
-                        new InstantAction(()-> robot.shooter.stop())
+                        new InstantAction(()-> robot.shooter.stop()),
+                        new SleepAction(100)// change depending on teamate in milliseconds
 
                 )
 
@@ -99,7 +101,8 @@ public class AudienceHuman extends AbstractAuto {
                                 RobotActions.intakeAction(1, 1.5),
                                 RobotActions.loaderAction(1, 1.5)
                         ),
-                        new InstantAction(()-> robot.shooter.stop())
+                        new InstantAction(()-> robot.shooter.stop()),
+                        new SleepAction(1000)// change depending on teamate
 
 
                 )

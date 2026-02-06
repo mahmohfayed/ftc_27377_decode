@@ -406,7 +406,20 @@ public void human6Build() {
                 .addPath(new BezierCurve(P_I9_RETURN, P_RAMP_CP, P_SHOOT))
                 .setLinearHeadingInterpolation(H_180,H_114)
                 .build();
-
+        intakeHuman = f.pathBuilder()
+                .addPath(new BezierCurve(
+                        P_SHOOT, P_HP_CP1, P_HP_END))
+                .setLinearHeadingInterpolation(H_114, H_270)
+                .addPath(new BezierLine(P_HP_END, P_HP_WALL))
+                .setTangentHeadingInterpolation()
+                .addPath(new BezierLine(P_HP_WALL, P_HP_RETURN))
+                .setTangentHeadingInterpolation()
+                .setReversed()
+                .build();
+        shootHuman = f.pathBuilder()
+                .addPath(new BezierCurve(P_HP_RETURN, P_HP_CP1, P_SHOOT))
+                .setLinearHeadingInterpolation(H_270, H_114)
+                .build();
         intakeExtra1 = f.pathBuilder()
                 .addPath(new BezierCurve(P_SHOOT, P_EX_CP1, P_EX_END1))
                 .setLinearHeadingInterpolation(H_114, H_150)

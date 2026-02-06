@@ -50,6 +50,7 @@ public class SoCalled21BallAuto extends AbstractAuto {
         cycle6();
         unloadRamp();
         cycle9();
+        Humancycle3();
         extraOne();
         extraTwo();
         extraThree();
@@ -60,6 +61,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
         robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.95)),
+
                                 new Actions.CallbackAction(
                                     RobotActions.startShooter(2.5),
                                     path.shootPreload,0.2,0,f,"Preloadrev"
@@ -68,8 +71,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
 
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1,2),
-                                RobotActions.loaderAction(1,2)
+                                RobotActions.intakeAction(1,1),
+                                RobotActions.loaderAction(1,1)
                         ),
                         new InstantAction(()-> robot.shooter.stop())
 
@@ -103,8 +106,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
                                 new FollowPathAction(f, path.shoot3)
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1, 1.5),
-                                RobotActions.loaderAction(1, 1.5)
+                                RobotActions.intakeAction(1, 1),
+                                RobotActions.loaderAction(1, 1)
                         ),
                         new FollowPathAction(f,path.leave),
                         new InstantAction(()-> robot.shooter.stop())
@@ -117,6 +120,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
     }
 
     private void cycle6() {
+        path.shoot6.getPath(0).setBrakingStart(0.7);
+        path.shoot6.getPath(0).setBrakingStrength(0.7);
 
         robot.actionScheduler.addAction(
                 new SequentialAction(
@@ -136,8 +141,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
                                 new FollowPathAction(f,path.shoot6)
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1,2),
-                                RobotActions.loaderAction(1,2)
+                                RobotActions.intakeAction(1,1),
+                                RobotActions.loaderAction(1,1)
                         ),
                         new InstantAction(()-> robot.shooter.stop())
 
@@ -155,6 +160,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
     }
 
     private void cycle9() {
+        path.shoot9.getPath(0).setBrakingStart(0.7);
+        path.shoot9.getPath(0).setBrakingStrength(0.7);
 
         robot.actionScheduler.addAction(
                 new SequentialAction(
@@ -173,8 +180,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
                                 new FollowPathAction(f,path.shoot9)
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1,2),
-                                RobotActions.loaderAction(1,2)
+                                RobotActions.intakeAction(1,1),
+                                RobotActions.loaderAction(1,1)
                         ),
                         new FollowPathAction(f,path.leave),
                         new InstantAction(()-> robot.shooter.stop())
@@ -185,7 +192,37 @@ public class SoCalled21BallAuto extends AbstractAuto {
 
         robot.actionScheduler.runBlocking();
     }
+    private void Humancycle3() {
 
+        robot.actionScheduler.addAction(
+                new SequentialAction(
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.7)),
+                                new Actions.CallbackAction(
+                                        RobotActions.intakeAction(1, 5),
+                                        path.intakeHuman, 0.01, 0, f, "IntakeHuman3"
+                                ),
+                                new FollowPathAction(f,path.intakeHuman)
+                        ),
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.85)),
+                                new Actions.CallbackAction(
+                                        RobotActions.startShooter(3),
+                                        path.shootHuman, 0.1, 0, f, "Shoothuman3"
+                                ),
+                                new FollowPathAction(f, path.shootHuman)
+                        ),
+                        new ParallelAction(
+                                RobotActions.intakeAction(1, 1.5),
+                                RobotActions.loaderAction(1, 1.5)
+                        ),
+                        new InstantAction(()-> robot.shooter.stop())
+
+
+                )
+        );
+        robot.actionScheduler.runBlocking();
+    }
 
 
 
