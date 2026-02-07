@@ -92,7 +92,8 @@ public class SoCalled21BallAuto extends AbstractAuto {
                         new ParallelAction(
                                 new InstantAction(()-> f.setMaxPower(0.75)),
                                 new Actions.CallbackAction(
-                                        RobotActions.intakeAction(1, 3),
+                                        new ParallelAction(RobotActions.intakeAction(1, 3),
+                                                RobotActions.loaderAction(1,1.5)),
                                         path.intake3, 0.1, 0, f, "Intake3"
                                 ),
                                 new FollowPathAction(f,path.intake3)
@@ -109,7 +110,6 @@ public class SoCalled21BallAuto extends AbstractAuto {
                                 RobotActions.intakeAction(1, 1),
                                 RobotActions.loaderAction(1, 1)
                         ),
-                        new FollowPathAction(f,path.leave),
                         new InstantAction(()-> robot.shooter.stop())
 
 
@@ -136,7 +136,7 @@ public class SoCalled21BallAuto extends AbstractAuto {
                         new ParallelAction(
                                 new InstantAction(()-> f.setMaxPower(1)),
                                 new Actions.CallbackAction(
-                                        RobotActions.startShooter(2),path.shoot6,0.4,0,f,"Shoot6"
+                                        RobotActions.startShooter(1.5),path.shoot6,0.3,0,f,"Shoot6"
                                 ),
                                 new FollowPathAction(f,path.shoot6)
                         ),

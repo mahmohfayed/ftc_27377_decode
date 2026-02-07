@@ -40,7 +40,7 @@ public class MainTeleOp extends LinearOpMode {
     private PIDController pidController = new PIDController();
     //    private HoodServo hood = new HoodServo();
     public static PIDGains pidGains = new PIDGains(
-            4.4, 0.00000001 ,0.1
+            4.3, 0.00000001 ,0.1
     );
 
     private boolean isFirst = true;
@@ -56,7 +56,7 @@ public class MainTeleOp extends LinearOpMode {
         DcMotor followerWheelMotor = hardwareMap.dcMotor.get("leftShooterMotor");
         DcMotor intake = hardwareMap.dcMotor.get("intakeMotor");
         DcMotor loader = hardwareMap.dcMotor.get("loaderMotor");
-        Servo servo = hardwareMap.servo.get("leftServo");
+        Servo servo = hardwareMap.servo.get("hoodServo");
 
         // Assigning standard gamepad1 directly
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
