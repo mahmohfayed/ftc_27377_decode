@@ -13,7 +13,7 @@ public class RobotActions {
     // INTAKE ----------------------------------------------
     public static Action intakeAction(double power, double timeSeconds) {
         return new SequentialAction(
-                new InstantAction(() -> robot.intake.intakeArtifacts(power)),
+                new InstantAction(() -> r`obot.intake.intakeArtifacts(power)),
                 new SleepAction(timeSeconds),
                 new InstantAction(() -> robot.intake.stop())
         );
