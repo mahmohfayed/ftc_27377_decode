@@ -26,8 +26,8 @@ import org.firstinspires.ftc.teamcode.decode.Subsystems.HoodServo;
 import org.firstinspires.ftc.teamcode.decode.Subsystems.Robot;
 
 @Configurable
-@TeleOp(name = "AlignTeleOpClose", group = "Main")
-public class MainTeleOp extends LinearOpMode {
+@TeleOp(name = "AlignTeleOpFar", group = "Main")
+public class MainTeleOp2 extends LinearOpMode {
 
     private Robot robot;
 
@@ -40,7 +40,7 @@ public class MainTeleOp extends LinearOpMode {
     private PIDController pidController = new PIDController();
     //    private HoodServo hood = new HoodServo();
     public static PIDGains pidGains = new PIDGains(
-            4.3, 0.00000001 ,0.1
+            4.5, 0.00000001 ,0.1
     );
 
     private boolean isFirst = true;
@@ -77,8 +77,6 @@ public class MainTeleOp extends LinearOpMode {
         //hood.setHoodservo(0.45);
 
         //gp1 = new GamepadEx(gamepad1);
-
-        servo.setPosition(0.35);
 
         robot = new Robot(hardwareMap);
         robot.drivetrain.setStartingPose(Common.AUTO_END_POSE);

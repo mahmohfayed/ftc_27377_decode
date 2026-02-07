@@ -36,7 +36,7 @@ public class zainTeleOp1 extends LinearOpMode {
         // -------- Subsystem Init --------
         hoodServo = new HoodServo();
         hoodServo.init(hardwareMap);
-        hoodServo.setHoodservo(0); // starting position
+        hoodServo.setHoodservo(0.3); // starting position
 
         // -------- Motor Directions --------
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);

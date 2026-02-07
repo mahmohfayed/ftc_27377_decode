@@ -45,7 +45,7 @@ public class AudiencePath {
     // Intake 3
     public static Pose P_I3_CP = new Pose(58.748, 31.2);
     public static Pose P_I3_END = new Pose(40.853, 31.2);
-    public static Pose P_I3_WALL = new Pose(26, 31.2);
+    public static Pose P_I3_WALL = new Pose(30, 31.2);
 
     // Intake 6
     public static Pose P_I6_CP = new Pose(57.060, 57);
@@ -69,7 +69,7 @@ public class AudiencePath {
     public static Pose P_HP_CP1 = new Pose(36.696, 57.580);
     public static Pose P_HP_END = new Pose(6.005, 25.960);
 
-    public static Pose P_HP_WALL = new Pose(5, 14.3);
+    public static Pose P_HP_WALL = new Pose(5.8, 14.3);
     public static Pose P_HP_RETURN = new Pose(6.036, 26.155);
 
 
@@ -453,6 +453,20 @@ public void human6Build() {
         leave = f.pathBuilder()
                 .addPath(new BezierLine(P_SHOOT, P_LEAVE_END))
                 .setConstantHeadingInterpolation(H_114)
+                .build();
+        intakeHuman = f.pathBuilder()
+                .addPath(new BezierCurve(
+                        P_SHOOT, P_HP_CP1, P_HP_END))
+                .setLinearHeadingInterpolation(H_114, H_270)
+                .addPath(new BezierLine(P_HP_END, P_HP_WALL))
+                .setTangentHeadingInterpolation()
+                .addPath(new BezierLine(P_HP_WALL, P_HP_RETURN))
+                .setTangentHeadingInterpolation()
+                .setReversed()
+                .build();
+        shootHuman = f.pathBuilder()
+                .addPath(new BezierCurve(P_HP_RETURN, P_HP_CP1, P_SHOOT))
+                .setLinearHeadingInterpolation(H_270, H_114)
                 .build();
     }
 }
