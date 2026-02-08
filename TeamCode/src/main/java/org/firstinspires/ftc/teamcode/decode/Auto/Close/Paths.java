@@ -67,7 +67,7 @@ public class Paths {
     // Extra balls
     public static Pose P_HP_CP1 = new Pose(111.920, 56.783);
     public static Pose P_HP_END = new Pose(137.788, 49.329);
-    public static Pose P_HP_WALL = new Pose(137.807, 9.166);
+    public static Pose P_HP_WALL = new Pose(137.807, 6);
     public static Pose P_HP_RETURN = new Pose(137.638, 49.348);
 
     public static Pose P_EX_CP1 = new Pose(93.862, 66.851);
