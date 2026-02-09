@@ -61,7 +61,7 @@ public class Paths {
     // Intake 9
     public static Pose P_I9_CP = new Pose(90, 39);
     public static Pose P_I9_END = new Pose(99.264, 39);
-    public static Pose P_I9_WALL = new Pose(130, 39);
+    public static Pose P_I9_WALL = new Pose(137, 39);
     public static Pose P_I9_RETURN = new Pose(99.433, 39);
 
     // Extra balls
@@ -80,7 +80,7 @@ public class Paths {
     public static Pose P_EX_END3 = new Pose(133.027, 60.605);
 
     // Leave
-    public static Pose P_LEAVE_END = new Pose(89.135, 52.164);
+    public static Pose P_LEAVE_END = new Pose(89.135, 80);
     public static double H_38 = Math.toRadians(38);
     public static double H_0 = Math.toRadians(0);
     public static double H_43 = Math.toRadians(43);
@@ -142,6 +142,46 @@ public class Paths {
     // =============================
     // BUILD ALL PATHS
     // =============================
+
+    public void goalRocketBuild() {
+        shootPreload = f.pathBuilder()
+                .addPath(new BezierLine(P_START, P_SHOOT))
+                .setLinearHeadingInterpolation(H_0, H_38)
+                .build();
+        intake6 = f.pathBuilder()
+                .addPath(new BezierCurve(P_SHOOT, P_I6_CP, P_I6_END))
+                .setLinearHeadingInterpolation(H_38, H_0)
+                .addPath(new BezierLine(P_I6_END, P_I6_WALL))
+                .setTangentHeadingInterpolation()
+                .addPath(new BezierLine(P_I6_WALL, P_I6_END))
+                .setTangentHeadingInterpolation()
+                .setReversed()
+                .build();
+
+        shoot6 = f.pathBuilder()
+                .addPath(new BezierCurve(P_I6_END, P_I6_CP, P_SHOOT))
+                .setLinearHeadingInterpolation(H_0, H_38)
+                .build();
+        // ---------- Ramp ----------
+        unloadRamp = f.pathBuilder()
+                .addPath(new BezierCurve(P_SHOOT, P_RAMP_CP, P_RAMP_END))
+                .setLinearHeadingInterpolation(H_38, H_0)
+                .build();
+        intake3 = f.pathBuilder()
+                .addPath(new BezierCurve(P_SHOOT, P_I3_CP, P_I3_END))
+                .setLinearHeadingInterpolation(H_38, H_0)
+                .addPath(new BezierLine(P_I3_END, P_I3_WALL))
+                .setConstantHeadingInterpolation(H_0)
+                .addPath(new BezierLine(P_I3_WALL, P_I3_END))
+                .setTangentHeadingInterpolation()
+                .setReversed()
+                .build();
+
+        shoot3 = f.pathBuilder()
+                .addPath(new BezierCurve(P_I3_END, P_I3_CP, P_SHOOT))
+                .setLinearHeadingInterpolation(H_0, H_38)
+                .build();
+    }
 
     public void goal3Build() {
         shootPreload = f.pathBuilder()

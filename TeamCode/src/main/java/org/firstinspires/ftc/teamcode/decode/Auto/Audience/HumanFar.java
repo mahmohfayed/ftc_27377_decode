@@ -48,21 +48,20 @@ public class HumanFar extends AbstractAuto {
     protected void onRun() {
         shootPreload();
         cycle3();
-        cycle6();
         Humancycle3();
+        Humancycle6();
 
     }
 
     private void shootPreload() {
-
-        robot.actionScheduler.addAction(
+                robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
                                 new InstantAction(() -> f.setMaxPower(0.95)),
 
                                 new Actions.CallbackAction(
                                         RobotActions.startShooter(2.5),
-                                        path.shootPreload, 0.2, 0, f, "Preloadrev"
+                                        path.shootPreload, 0.28, 0, f, "Preloadrev"
                                 ),
                                 new FollowPathAction(f, path.shootPreload, true)
 
@@ -82,8 +81,8 @@ public class HumanFar extends AbstractAuto {
 
     private void cycle3() {
 //    path.shoot3.getPath(0).setHeadingConstraint(0.0349);
-        path.shoot3.getPath(0).setBrakingStart(0.7);
-        path.shoot3.getPath(0).setBrakingStrength(0.7);
+        path.shoot3.getPath(0).setBrakingStart(0.8);
+        path.shoot3.getPath(0).setBrakingStrength(0.75);
         robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
@@ -105,8 +104,8 @@ public class HumanFar extends AbstractAuto {
                                 new FollowPathAction(f, path.shoot3)
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1, 1),
-                                RobotActions.loaderAction(1, 1)
+                                RobotActions.intakeAction(1, 0.7),
+                                RobotActions.loaderAction(1, 0.7)
                         ),
                         new InstantAction(() -> robot.shooter.stop())
 
@@ -115,37 +114,9 @@ public class HumanFar extends AbstractAuto {
         );
         robot.actionScheduler.runBlocking();
     }
-    private void cycle6() {
-        path.shoot6.getPath(0).setBrakingStart(0.7);
-        path.shoot6.getPath(0).setBrakingStrength(0.7);
 
-        robot.actionScheduler.addAction(
-                new SequentialAction(
-                        new ParallelAction(
-                                new InstantAction(()-> f.setMaxPower(0.85)),
-                                new Actions.CallbackAction(
-                                        RobotActions.intakeAction(1,3),
-                                        path.intake6,0.1,0,f,"intake6"
-                                ),
-                                new FollowPathAction(f,path.intake6)
-                        ),
-                        new ParallelAction(
-                                new InstantAction(()-> f.setMaxPower(1)),
-                                new Actions.CallbackAction(
-                                        RobotActions.startShooter(1.5),path.shoot6,0.3,0,f,"Shoot6"
-                                ),
-                                new FollowPathAction(f,path.shoot6)
-                        ),
-                        new ParallelAction(
-                                RobotActions.intakeAction(1,1),
-                                RobotActions.loaderAction(1,1)
-                        ),
-                        new InstantAction(()-> robot.shooter.stop())
 
-                )
-        );
-        robot.actionScheduler.runBlocking();
-    }
+
 
     private void Humancycle3() {
 
@@ -168,15 +139,46 @@ public class HumanFar extends AbstractAuto {
                                 new FollowPathAction(f, path.shootHuman)
                         ),
                         new ParallelAction(
-                                RobotActions.intakeAction(1, 1.5),
-                                RobotActions.loaderAction(1, 1.5)
+                                RobotActions.intakeAction(1, 0.7),
+                                RobotActions.loaderAction(1, 0.7)
                         ),
-                        new InstantAction(() -> robot.shooter.stop()),
-                        new SleepAction(1000)// change depending on teamate
+                        new InstantAction(() -> robot.shooter.stop())
+
 
 
                 )
         );
         robot.actionScheduler.runBlocking();
     }
+    private void Humancycle6() {
+
+        robot.actionScheduler.addAction(
+                new SequentialAction(
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.7)),
+                                new Actions.CallbackAction(
+                                        RobotActions.intakeAction(1, 5),
+                                        path.intakeHuman, 0.01, 0, f, "intakeHuman"
+                                ),
+                                new FollowPathAction(f, path.intakeHuman)
+                        ),
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.85)),
+                                new Actions.CallbackAction(
+                                        RobotActions.startShooter(3), path.shootHuman, 0.5, 0, f, "shootHuman"
+                                ),
+                                new FollowPathAction(f, path.shootHuman)
+                        ),
+                        new ParallelAction(
+                                RobotActions.intakeAction(1, 0.7),
+                                RobotActions.loaderAction(1, 0.7)
+                        ),
+                        new InstantAction(()-> robot.shooter.stop()),
+                        new FollowPathAction(f,path.leave)     // change depending on teamate,
+
+                )
+        );
+        robot.actionScheduler.runBlocking();
+    }
+
 }

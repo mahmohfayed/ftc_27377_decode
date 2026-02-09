@@ -43,8 +43,8 @@ public class Ilove21balls extends AbstractAuto {
 @Override
 protected void onRun() {
     shootPreload();
-    cycle3();
     cycle6();
+    cycle3();
     unloadRamp();
     cycle9();
     Human();
@@ -77,7 +77,35 @@ private void shootPreload() {
     robot.actionScheduler.runBlocking();
 }
 
-
+    private void cycle6() {
+        path.shoot6.getPath(0).setBrakingStart(0.8);
+        path.shoot6.getPath(0).setBrakingStrength(0.8);
+        robot.actionScheduler.addAction(
+                new SequentialAction(
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(0.7)),
+                                new Actions.CallbackAction(
+                                        RobotActions.intakeAction(1, 4),
+                                        path.intake6, 0.01, 0, f, "intake6"
+                                ),
+                                new FollowPathAction(f, path.intake6)
+                        ),
+                        new ParallelAction(
+                                new InstantAction(()-> f.setMaxPower(1)),
+                                new Actions.CallbackAction(
+                                        RobotActions.startShooter(1), path.shoot6, 0.4, 0, f, "Shoot6"
+                                ),
+                                new FollowPathAction(f, path.shoot6)
+                        ),
+                        new ParallelAction(
+                                RobotActions.intakeAction(1,1.5),
+                                RobotActions.loaderAction(1,1.5)
+                        ),
+                        new InstantAction(() -> robot.shooter.stop())
+                )
+        );
+        robot.actionScheduler.runBlocking();
+    }
     private void cycle3() {
         path.shoot3.getPath(0).setBrakingStart(0.9);
         path.shoot3.getPath(0).setBrakingStrength(0.7);
@@ -110,35 +138,7 @@ private void shootPreload() {
         robot.actionScheduler.runBlocking();
     }
 
-    private void cycle6() {
-        path.shoot6.getPath(0).setBrakingStart(0.8);
-        path.shoot6.getPath(0).setBrakingStrength(0.8);
-        robot.actionScheduler.addAction(
-                new SequentialAction(
-                        new ParallelAction(
-                                new InstantAction(()-> f.setMaxPower(0.7)),
-                                new Actions.CallbackAction(
-                                        RobotActions.intakeAction(1, 4),
-                                        path.intake6, 0.01, 0, f, "intake6"
-                                ),
-                                new FollowPathAction(f, path.intake6)
-                        ),
-                        new ParallelAction(
-                                new InstantAction(()-> f.setMaxPower(1)),
-                                new Actions.CallbackAction(
-                                        RobotActions.startShooter(1), path.shoot6, 0.4, 0, f, "Shoot6"
-                                ),
-                                new FollowPathAction(f, path.shoot6)
-                        ),
-                        new ParallelAction(
-                                RobotActions.intakeAction(1,1.5),
-                                RobotActions.loaderAction(1,1.5)
-                        ),
-                        new InstantAction(() -> robot.shooter.stop())
-                )
-        );
-        robot.actionScheduler.runBlocking();
-    }
+
     private void unloadRamp() {
 
         robot.actionScheduler.addAction(

@@ -45,7 +45,7 @@ public class AudiencePath {
     // Intake 3
     public static Pose P_I3_CP = new Pose(58.748, 31.2);
     public static Pose P_I3_END = new Pose(40.853, 31.2);
-    public static Pose P_I3_WALL = new Pose(30, 31.2);
+    public static Pose P_I3_WALL = new Pose(30, 33);
 
     // Intake 6
     public static Pose P_I6_CP = new Pose(57.060, 57);

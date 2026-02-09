@@ -42,6 +42,12 @@ public class MainTeleOp extends LinearOpMode {
     public static PIDGains pidGains = new PIDGains(
             4.3, 0.00000001 ,0.1
     );
+   private Pose relocalizationPose = new Pose(
+            118,   // x
+            16,   // y
+            90    // heading
+    );
+
 
     private boolean isFirst = true;
     private Pose goal = new Pose(136, 136);
@@ -78,7 +84,7 @@ public class MainTeleOp extends LinearOpMode {
 
         //gp1 = new GamepadEx(gamepad1);
 
-        servo.setPosition(0.35);
+        servo.setPosition(0.2);
 
         robot = new Robot(hardwareMap);
         robot.drivetrain.setStartingPose(Common.AUTO_END_POSE);
@@ -89,6 +95,8 @@ public class MainTeleOp extends LinearOpMode {
         robot.drivetrain.startTeleOpDrive(true);
 
         if(!isRed) goal = goal.mirror();
+        if(!isRed) relocalizationPose = relocalizationPose.mirror();
+
 
         waitForStart();
 
@@ -150,16 +158,17 @@ public class MainTeleOp extends LinearOpMode {
 
             if (gamepad1.right_bumper) {
                 intake.setPower(1);
-            } else if (gamepad1.dpad_left) {
-                intake.setPower(-0.5);
             }
 
             if (gamepad1.x) {
-                servo.setPosition(0.45);
+                servo.setPosition(0.6);
             } else if (gamepad1.b) {
-                servo.setPosition(0.35);
+                servo.setPosition(0.5);
             } else if (gamepad1.dpad_down) {
-                servo.setPosition(0.3);
+                servo.setPosition(0.2);
+            }
+            if (gamepad1.right_stick_button) {
+                robot.drivetrain.setPose(relocalizationPose);
             }
 
             robot.run();
