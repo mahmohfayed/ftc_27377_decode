@@ -58,7 +58,7 @@ public class HumanFar extends AbstractAuto {
                 new SequentialAction(
                         new ParallelAction(
                                 new InstantAction(() -> f.setMaxPower(0.95)),
-
+                                new InstantAction(() -> robot.hoodServo.setHoodServo(0.7)),
                                 new Actions.CallbackAction(
                                         RobotActions.startShooter(2.5),
                                         path.shootPreload, 0.28, 0, f, "Preloadrev"

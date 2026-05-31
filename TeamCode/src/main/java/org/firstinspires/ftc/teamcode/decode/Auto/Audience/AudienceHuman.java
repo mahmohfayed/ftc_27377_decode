@@ -56,6 +56,7 @@ public class AudienceHuman extends AbstractAuto {
         robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
+                                new InstantAction(() -> robot.hoodServo.setHoodServo(0.7)),
                                 new Actions.CallbackAction(
                                         RobotActions.startShooter(1.5),
                                         path.shootPreload,0.1,0,f,"Preloadrev"

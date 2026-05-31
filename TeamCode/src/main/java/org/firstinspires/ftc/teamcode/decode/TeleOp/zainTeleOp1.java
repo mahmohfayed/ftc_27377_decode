@@ -36,7 +36,7 @@ public class zainTeleOp1 extends LinearOpMode {
         // -------- Subsystem Init --------
         hoodServo = new HoodServo();
         hoodServo.init(hardwareMap);
-        hoodServo.setHoodservo(0.3); // starting position
+        hoodServo.setHoodServo(0.3); // starting position
 
         // -------- Motor Directions --------
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -110,11 +110,11 @@ public class zainTeleOp1 extends LinearOpMode {
 
             // -------- Hood (2 Servos) --------
             if (gamepad1.x) {
-                hoodServo.setHoodservo(0.4);
+                hoodServo.setHoodServo(0.4);
             } else if (gamepad1.b) {
-                hoodServo.setHoodservo(0.45);
+                hoodServo.setHoodServo(0.45);
             } else if (gamepad1.dpad_down) {
-                hoodServo.setHoodservo(0.5);
+                hoodServo.setHoodServo(0.5);
             }
 
             // -------- Telemetry --------

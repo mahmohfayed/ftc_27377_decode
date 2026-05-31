@@ -10,7 +10,7 @@ public final class Robot {
     public final Loader loader;     // loader
     public final Shooter shooter;
     public final Intake intake;
-
+    public final HoodServo hoodServo;
 
 
     public final BulkReader bulkReader;
@@ -18,8 +18,8 @@ public final class Robot {
 
     public Robot(HardwareMap hardwareMap) {
 
-        bulkReader = new BulkReader(hardwareMap);
 
+        bulkReader = new BulkReader(hardwareMap);
         drivetrain = Constants.createFollower(hardwareMap);
         actionScheduler = new ActionScheduler();
 
@@ -28,6 +28,8 @@ public final class Robot {
         intake = new Intake(hardwareMap); // 2 intake wheel
 
         shooter = new Shooter(hardwareMap); // shooter wheel (2 motors)
+        hoodServo = new HoodServo();
+        hoodServo.init(hardwareMap);
     }
 
     public void run() {

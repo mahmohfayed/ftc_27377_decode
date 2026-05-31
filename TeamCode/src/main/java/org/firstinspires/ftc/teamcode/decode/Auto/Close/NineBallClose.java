@@ -53,6 +53,7 @@ public class NineBallClose extends AbstractAuto {
         robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
+                                new InstantAction(() -> robot.hoodServo.setHoodServo(0.61)),
                                 new Actions.CallbackAction(
                                         RobotActions.startShooter(1),
                                         path.shootPreload, 0.5, 0, f, "Preloadrev"

@@ -50,6 +50,7 @@ public class SixBallClose extends AbstractAuto {
         robot.actionScheduler.addAction(
                 new SequentialAction(
                         new ParallelAction(
+                                new InstantAction(() -> robot.hoodServo.setHoodServo(0.62)),
                                 new Actions.CallbackAction(
                                         RobotActions.startShooter(1),
                                         path.shootPreload, 0.5, 0, f, "Preloadrev"

@@ -82,7 +82,7 @@ public class MainTeleOp2 extends LinearOpMode {
         //hood.setHoodservo(0.45);
 
         //gp1 = new GamepadEx(gamepad1);
-        servo.setPosition(0.3);
+        servo.setPosition(0.62);
 
         robot = new Robot(hardwareMap);
         robot.drivetrain.setStartingPose(Common.AUTO_END_POSE);

@@ -62,7 +62,7 @@ public class SoCalled21BallAuto extends AbstractAuto {
                 new SequentialAction(
                         new ParallelAction(
                                 new InstantAction(()-> f.setMaxPower(0.95)),
-
+                                new InstantAction(() -> robot.hoodServo.setHoodServo(0.72)),
                                 new Actions.CallbackAction(
                                     RobotActions.startShooter(2.5),
                                     path.shootPreload,0.2,0,f,"Preloadrev"
