@@ -276,16 +276,15 @@ public class MainTeleOp extends LinearOpMode {
 
             // ── Relocalize (D-pad Right) ───────────────────────────────────
             if (gamepad1.dpad_right) {
-                // Only relocalize if limelight actually sees the tag
-                if (limelightPose != null) {
-                    double jumpDist = Math.hypot(
+            // Only relocalize if limelight actually sees the tag
+                double jumpDist = Math.hypot(
                             limelightPose.getX() - robotX,
                             limelightPose.getY() - robotY);
                     if (jumpDist < LIMELIGHT_MAX_JUMP) {
                         robot.drivetrain.setPose(limelightPose);
-                    }
-                    // else: bad reading, do nothing
                 }
+                // else: bad reading, do nothing
+
                 // else: no tag visible, do nothing
             }
 

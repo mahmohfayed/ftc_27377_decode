@@ -45,7 +45,7 @@ public class AudiencePath {
     // Intake 3
     public static Pose P_I3_CP = new Pose(58.748, 31.2);
     public static Pose P_I3_END = new Pose(40.853, 31.2);
-    public static Pose P_I3_WALL = new Pose(30, 33);
+    public static Pose P_I3_WALL = new Pose(25, 33);
 
     // Intake 6
     public static Pose P_I6_CP = new Pose(57.060, 57);
@@ -55,14 +55,14 @@ public class AudiencePath {
     // Ramp
     public static Pose P_RAMP_CP = new Pose(45.749, 67);
     public static Pose P_RAMP_END = new Pose(50.982, 67);
-    public static Pose P_RAMP_WALL = new Pose(23, 67);
+    public static Pose P_RAMP_WALL = new Pose(30, 67);
     public static Pose P_RAMP_RET = new Pose(50.982, 67);
 
     // Intake 9
-    public static Pose P_I9_CP = new Pose(58.410, 82.5);
-    public static Pose P_I9_END = new Pose(47.606, 82.5);
-    public static Pose P_I9_WALL = new Pose(22, 82.5);
-    public static Pose P_I9_RETURN = new Pose(47.437, 82.5);
+    public static Pose P_I9_CP = new Pose(58.410, 81.5);
+    public static Pose P_I9_END = new Pose(47.606, 81.5);
+    public static Pose P_I9_WALL = new Pose(28, 81.5);
+    public static Pose P_I9_RETURN = new Pose(47.437, 81.5);
 
     public static Pose P_HP_START = new Pose(58.000, 16.000);
 

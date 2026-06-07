@@ -23,12 +23,26 @@ public class RobotActions {
     public static double MIN_DISTANCE           = 20.0;
     public static double MID_DISTANCE           = 60.0;
     public static double MAX_DISTANCE           = 180.0;
-    public static double SHOOTER_VELOCITY_CLOSE = 1700;
-    public static double SHOOTER_VELOCITY_MID   = 2200;
-    public static double SHOOTER_VELOCITY_FAR   = 2750;
-    public static double HOOD_MIN_POSITION      = 0.82;
-    public static double HOOD_MID_POSITION      = 0.63;
-    public static double HOOD_MAX_POSITION      = 0.73;
+    public static double SHOOTER_VELOCITY_CLOSE = 2150;    //1700
+    public static double SHOOTER_VELOCITY_MID   = 2200;    //2200
+    public static double SHOOTER_VELOCITY_FAR   = 2550;    //2750
+    public static double HOOD_MIN_POSITION      = 0.99; //.02
+    public static double HOOD_MID_POSITION      = 0.89;  //63
+    public static double HOOD_MAX_POSITION      = 0.71;  //73
+
+
+
+
+
+    public static double MIN_DISTANCEFAR          = 20.0;
+    public static double MID_DISTANCEFAR           = 60.0;
+    public static double MAX_DISTANCEFAR           = 180.0;
+    public static double SHOOTER_VELOCITY_CLOSEFAR = 2150;    //1700
+    public static double SHOOTER_VELOCITY_MIDFAR   = 2200;    //2200
+    public static double SHOOTER_VELOCITY_FARFAR  = 2300;    //2750
+    public static double HOOD_MIN_POSITIONFAR      = 0.99; //.02
+    public static double HOOD_MID_POSITIONFAR      = 0.96;  //63
+    public static double HOOD_MAX_POSITIONFAR      = 0.75;  //73
 
     // ── Helper: current distance to goal ──────────────────────────────────
     public static double getDistanceToGoal() {
@@ -64,7 +78,30 @@ public class RobotActions {
             return HOOD_MID_POSITION - t * (HOOD_MID_POSITION - HOOD_MIN_POSITION);
         }
     }
+    public static double distanceToShooterVelocityFar(double distance) {
+        if (distance <= MID_DISTANCEFAR) {
+            double t = (distance - MIN_DISTANCEFAR) / (MID_DISTANCEFAR - MIN_DISTANCEFAR);
+            t = Math.max(0.0, Math.min(1.0, t));
+            return SHOOTER_VELOCITY_CLOSEFAR + t * (SHOOTER_VELOCITY_MIDFAR - SHOOTER_VELOCITY_CLOSEFAR);
+        } else {
+            double t = (distance - MID_DISTANCEFAR) / (MAX_DISTANCEFAR - MID_DISTANCEFAR);
+            t = Math.max(0.0, Math.min(1.0, t));
+            return SHOOTER_VELOCITY_MIDFAR + t * (SHOOTER_VELOCITY_FARFAR - SHOOTER_VELOCITY_MIDFAR);
+        }
+    }
 
+    // ── Hood mapping (identical to TeleOp) ───────────────────────────────
+    public static double distanceToHoodPositionFar(double distance) {
+        if (distance <= MID_DISTANCEFAR) {
+            double t = (distance - MIN_DISTANCEFAR) / (MID_DISTANCEFAR - MIN_DISTANCEFAR);
+            t = Math.max(0.0, Math.min(1.0, t));
+            return HOOD_MAX_POSITIONFAR - t * (HOOD_MAX_POSITIONFAR - HOOD_MID_POSITIONFAR);
+        } else {
+            double t = (distance - MID_DISTANCEFAR) / (MAX_DISTANCEFAR - MID_DISTANCEFAR);
+            t = Math.max(0.0, Math.min(1.0, t));
+            return HOOD_MID_POSITIONFAR - t * (HOOD_MID_POSITIONFAR - HOOD_MIN_POSITIONFAR);
+        }
+    }
     // ── INTAKE ────────────────────────────────────────────────────────────
     public static Action intakeAction(double power, double timeSeconds) {
         return new SequentialAction(
@@ -102,7 +139,17 @@ public class RobotActions {
                 new SleepAction(timeSeconds)
         );
     }
-
+    public static Action startShooterfar(double timeSeconds) {
+        return new SequentialAction(
+                new InstantAction(() -> {
+                    double dist = getDistanceToGoal();
+                    // Same functions as TeleOp - velocity AND hood set at same time
+                    robot.shooter.setVelocity(distanceToShooterVelocityFar(dist));
+                    robot.hoodServo.setHoodServo(distanceToHoodPositionFar(dist));
+                }),
+                new SleepAction(timeSeconds)
+        );
+    }
     // ── HOOD SERVO ────────────────────────────────────────────────────────
     public static Action setHoodServo(double position) {
         return new InstantAction(() -> robot.hoodServo.setHoodServo(position));
