@@ -114,7 +114,7 @@ public class RobotActions {
 
     // ── LOADER ────────────────────────────────────────────────────────────
     public static Action loaderAction(double power, double timeSeconds) {
-        if(Math.abs(robot.shooter.getVelocity() - targetVelo) < 50) {
+        if(true) {
             return new SequentialAction(
                     new InstantAction(() -> robot.loader.setLoaderMotor(power)),
                     new SleepAction(timeSeconds),
@@ -139,9 +139,9 @@ public class RobotActions {
                     // Same functions as TeleOp - velocity AND hood set at same time
                     robot.shooter.setVelocity(distanceToShooterVelocity(dist));
                     targetVelo = distanceToShooterVelocity(dist);
-                })
+                }),
 
-          //      new SleepAction(timeSeconds)
+               new SleepAction(timeSeconds)
         );
     }
     public static Action startShooterfar(double timeSeconds) {
