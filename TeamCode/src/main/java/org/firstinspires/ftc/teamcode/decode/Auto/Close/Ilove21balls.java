@@ -65,7 +65,7 @@ public class Ilove21balls extends AbstractAuto {
                                 // startShooter now sets velocity + hood based on distance
                                 // (same math as teleop) instead of raw full power
                                 new Actions.CallbackAction(
-                                        RobotActions.startShooter(2),
+                                        RobotActions.startShooter(10),
                                         path.shootPreload,0.01,0,f,"Preloadrev"
                                 ),
                                 new FollowPathAction(f,path.shootPreload,true)

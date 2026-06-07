@@ -42,14 +42,13 @@ public class MainTeleOp extends LinearOpMode {
     public static double SHOOTER_F = 12.0;
 
     public static double SHOOTER_VELOCITY_IDLE  = 1000;
-    public static double SHOOTER_VELOCITY_CLOSE = 1350;
-    public static double SHOOTER_VELOCITY_MID   = 2200;
-    public static double SHOOTER_VELOCITY_FAR   = 2750;
-
+    public static double SHOOTER_VELOCITY_CLOSE = 1350; //1350
+    public static double SHOOTER_VELOCITY_MID   = 1600;  //2200
+    public static double SHOOTER_VELOCITY_FAR   = 2300; //2750
     // ── Hood tuning ────────────────────────────────────────────────────────
-    public static double HOOD_MIN_POSITION = 0.82;
-    public static double HOOD_MID_POSITION = 0.63;
-    public static double HOOD_MAX_POSITION = 0.73;
+   // public static double HOOD_MIN_POSITION = 0.82;
+   // public static double HOOD_MID_POSITION = 0.63;
+   // public static double HOOD_MAX_POSITION = 0.73;
     public static double MIN_DISTANCE      = 20.0;
     public static double MID_DISTANCE      = 60.0;
     public static double MAX_DISTANCE      = 180.0;
@@ -73,7 +72,7 @@ public class MainTeleOp extends LinearOpMode {
     private DcMotorEx followerWheelMotor;
 
     // ── Internal state ─────────────────────────────────────────────────────
-    private double  lastHoodPosition       = -1;
+   // private double  lastHoodPosition       = -1;
     private boolean shooterRunning         = false;
     private long    lastAutoRelocalizeTime = 0;
     private boolean limelightAvailable     = false;
@@ -159,8 +158,8 @@ public class MainTeleOp extends LinearOpMode {
         // else: no auto, no limelight - will correct once tag is seen
 
         robot.drivetrain.update();
-        robot.hoodServo.setHoodServo(HOOD_MIN_POSITION);
-        lastHoodPosition = HOOD_MIN_POSITION;
+//        robot.hoodServo.setHoodServo(HOOD_MIN_POSITION);
+//        lastHoodPosition = HOOD_MIN_POSITION;
 
         while (opModeIsActive()) {
 
@@ -190,11 +189,11 @@ public class MainTeleOp extends LinearOpMode {
             double distance = Math.sqrt(dx * dx + dy * dy);
 
             // ── Auto hood ──────────────────────────────────────────────────
-            double hoodPosition = distanceToHoodPosition(distance);
-            if (Math.abs(hoodPosition - lastHoodPosition) > HOOD_DEADBAND) {
-                robot.hoodServo.setHoodServo(hoodPosition);
-                lastHoodPosition = hoodPosition;
-            }
+//            double hoodPosition = distanceToHoodPosition(distance);
+//            if (Math.abs(hoodPosition - lastHoodPosition) > HOOD_DEADBAND) {
+//                robot.hoodServo.setHoodServo(hoodPosition);
+//                lastHoodPosition = hoodPosition;
+//            }
 
             // ── Shooter (Right Trigger) ────────────────────────────────────
             if (gamepad1.right_trigger > 0.1) {
@@ -314,7 +313,7 @@ public class MainTeleOp extends LinearOpMode {
                     distanceToShooterVelocity(distance) - flyWheelMotor.getVelocity());
             telemetry.addLine("=== HOOD ===");
             telemetry.addData("Distance to Goal", "%.1f in", distance);
-            telemetry.addData("Hood Target",      "%.3f",    hoodPosition);
+//            telemetry.addData("Hood Target",      "%.3f",    hoodPosition);
             telemetry.addData("Hood Actual",      "%.3f",    robot.hoodServo.getPosition());
             telemetry.addLine("=== HEADING ===");
             telemetry.addData("Heading",       "%.1f deg",
@@ -356,15 +355,15 @@ public class MainTeleOp extends LinearOpMode {
     }
 
     // ── Hood mapping ───────────────────────────────────────────────────────
-    private double distanceToHoodPosition(double distance) {
-        if (distance <= MID_DISTANCE) {
-            double t = (distance - MIN_DISTANCE) / (MID_DISTANCE - MIN_DISTANCE);
-            t = Math.max(0.0, Math.min(1.0, t));
-            return HOOD_MAX_POSITION - t * (HOOD_MAX_POSITION - HOOD_MID_POSITION);
-        } else {
-            double t = (distance - MID_DISTANCE) / (MAX_DISTANCE - MID_DISTANCE);
-            t = Math.max(0.0, Math.min(1.0, t));
-            return HOOD_MID_POSITION - t * (HOOD_MID_POSITION - HOOD_MIN_POSITION);
-        }
-    }
+//    private double distanceToHoodPosition(double distance) {
+//        if (distance <= MID_DISTANCE) {
+//            double t = (distance - MIN_DISTANCE) / (MID_DISTANCE - MIN_DISTANCE);
+//            t = Math.max(0.0, Math.min(1.0, t));
+//            return HOOD_MAX_POSITION - t * (HOOD_MAX_POSITION - HOOD_MID_POSITION);
+//        } else {
+//            double t = (distance - MID_DISTANCE) / (MAX_DISTANCE - MID_DISTANCE);
+//            t = Math.max(0.0, Math.min(1.0, t));
+//            return HOOD_MID_POSITION - t * (HOOD_MID_POSITION - HOOD_MIN_POSITION);
+//        }
+//    }
 }
